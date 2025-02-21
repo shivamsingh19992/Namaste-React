@@ -11,3 +11,23 @@
 -Compress
 -Consistent Hashing
 -Tree Shaking
+
+//Food odering app
+
+#Food Ordering App
+ * Parts of Page
+ * 
+ * Header
+ * --Logo
+ * --Nav Itrms
+ * Body
+ * -- Search
+ * -- Restaurant Container
+ * ---- Restaurant Cards
+ * -------- Name of Rest
+ * -------- Cuisine
+ * -------- Est. Time
+ * -------- Star Rating
+ * -------- Price for two
+ * Footer
+ */
