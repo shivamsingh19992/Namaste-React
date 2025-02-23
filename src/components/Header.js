@@ -1,6 +1,8 @@
+import { useState } from 'react'
 import {LogoUrl} from './../utils/constants'
 
 export default Header = () => {
+    const [loginstatus,setLoginStatus]=useState(false);
     return (
         <div className="Header">
             <div className="Logo">
@@ -11,6 +13,9 @@ export default Header = () => {
                     <li>Home</li>
                     <li>About Us</li>
                     <li>Contact Us</li>
+                    <button onClick={()=>setLoginStatus(!loginstatus)}>
+                        {loginstatus? 'Login':'LogOut'}
+                    </button>
                 </ul>
             </div>
         </div>
