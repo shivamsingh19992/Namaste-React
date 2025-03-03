@@ -20,6 +20,7 @@ export default Body = () => {
         else{
             setfilterList(originalList);
         }
+        setSearchText('');
         setIsFiltered(flag);
     }
 
@@ -31,6 +32,9 @@ export default Body = () => {
     //if some dependency array useEffect calls on change of that dependency inside body component(there can be multiple dependency)
     useEffect(()=>{
         fetchData();
+
+        return ()=>{       //for unmounting phase 
+        }
     },[])
 
     const fetchData = async ()=>{
