@@ -1,8 +1,8 @@
 import RestaurantCard from "./Restaurants";
-import resobj from "./../utils/MockData";
 import { useEffect, useState } from "react";
 import ShimmerUI from "./ShimmerUI";
 import { Link } from "react-router";
+import { useOnlineStatus } from "../utils/useOnlineStatus";
 
 
 
@@ -12,6 +12,7 @@ export default Body = () => {
     const [filterList,setfilterList]=useState([]);
     const [isFiltered,setIsFiltered] = useState(false);
     const [searchText,setSearchText] = useState('');
+    const onlinestatus = useOnlineStatus();
     function filterTopRestaurants(flag){
         if(flag)
         {
@@ -30,6 +31,7 @@ export default Body = () => {
     //if no dependency array useEffect calls on every render of body component
     //if empty dependency array useEffect calls on only intitial render of body component
     //if some dependency array useEffect calls on change of that dependency inside body component(there can be multiple dependency)
+    //Important Note : Export fetch data logic as custom hook
     useEffect(()=>{
         fetchData();
 
@@ -44,6 +46,12 @@ export default Body = () => {
        console.log(datas);
        setOriginalList(datas);
        setfilterList(datas);
+    }
+
+    if(!onlinestatus)
+    {
+      console.log('u r offline')
+      return <ShimmerUI/>
     }
 
     if(originalList.length ===0){       ///create a shimmer ui to render skeleton until data fetches

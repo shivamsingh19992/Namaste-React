@@ -1,29 +1,20 @@
-import { useEffect, useState } from "react";
 import {useParams} from 'react-router'
-import { MenuApi } from "../utils/constants";
+import { useRestaurantMenu } from "../utils/useRestaurantMenu";
+import ShimmerUI from "./ShimmerUI";
 
 const RestaurantMenu=()=>{
-    const [listofMenu,setListofMenu]=useState(null);
-    const [nameOfRestaurant,setNameofRestaurant] = useState('');
-
-    console.log(useParams())
+    debugger;
     const {resId} = useParams();
-    useEffect(()=>{
-        getMenudata();
-    },[])
-    async function getMenudata() {
-        debugger;
-        console.log(MenuApi+resId);
-        const menu = await fetch(MenuApi+resId);
-        const json = await menu.json();
-        console.log(json);
-        const listofMenu = json.data.cards[4].groupedCard.cardGroupMap.REGULAR.cards.filter(x=> x.card.card?.itemCards?.length>0);
-        console.log(listofMenu);
-        setListofMenu(listofMenu);
-        setNameofRestaurant(json.data.cards[0].card.card.text);
-    }
 
-    if(listofMenu===null | nameOfRestaurant==='')
+    //custom hook for restaurant menu
+    const resMenu = useRestaurantMenu(resId)
+
+    if(resMenu===null)
+        return <ShimmerUI/>;
+    const listofMenu = resMenu?.data.cards[4].groupedCard.cardGroupMap.REGULAR.cards.filter(x=> x.card.card?.itemCards?.length>0);
+    const nameOfRestaurant = resMenu?.data.cards[0].card.card.text;
+
+    if(!listofMenu || !nameOfRestaurant)
         return;
     
     return(
@@ -31,9 +22,10 @@ const RestaurantMenu=()=>{
             <div>
                 {nameOfRestaurant}
             </div>
+            <ul/>
             {listofMenu.map(label=>{
                 return(
-                    <li key={label.card.card.categoryId}>
+                    <ul key={label.card.card.categoryId}>
                     {label.card.card.itemCards.map(item=>{
                         return(
                             <li key={item.card.info.id}>
@@ -43,8 +35,9 @@ const RestaurantMenu=()=>{
                             </li>
                         )
                     })}
-                    </li>)
+                    </ul>)
             })}
+            <ul/>
         </div>
     )
 }

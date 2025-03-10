@@ -1,3 +1,4 @@
+import Debounce from "./Debouncing"
 import UserClass from "./UserClass"
 
 export default About =()=>{
@@ -7,6 +8,7 @@ export default About =()=>{
             This is About Page
         </div>
         <UserClass createdby={'Shivam'} college={'NIT Kurukshetra'} company={'PolicyBazaar.com'}/>
+        {<Debounce/>}
         </>
         
     )
